@@ -1,8 +1,9 @@
 import { Facebook, Instagram, MailOutline, Phone, Pinterest, Room, Twitter } from "@material-ui/icons"
 import styled from "styled-components"
-
+import {mobile} from "../../responsive"
 const Container = styled.div`
     display:flex;
+    ${mobile({ flexDirection: "column" })}
 `
 
 const Left = styled.div`
@@ -24,7 +25,8 @@ const Right = styled.div`
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 20px;  
+    padding: 20px; 
+    ${mobile({ backgroundColor: "#fff8f8" })}
 `
 
 const Logo = styled.h1``
