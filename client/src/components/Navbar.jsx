@@ -4,6 +4,7 @@ import React from "react";
 import styled from "styled-components";
 import { mobile } from "../responsive";
 import { useSelector } from "react-redux";
+import {Link} from "react-router-dom"
 
 
 const Container = styled.div`
@@ -51,6 +52,9 @@ const Center = styled.div`
 
 const Logo = styled.h1`
   font-weight: bold;
+  color: teal;
+  text-decoration: none;
+  opacity: 0.6;
   ${mobile({ fontSize: "24px" })}
 `;
 const Right = styled.div`
@@ -69,9 +73,9 @@ const MenuItem = styled.div`
 `;
 
 const Navbar = () => {
-  const cart = useSelector(state=>state.cart);
+  const quantity = useSelector(state=>state.cart.quantity);
   
-  console.log(cart);
+  console.log(quantity);
   return (
     <Container>
       <Wrapper>
@@ -82,17 +86,21 @@ const Navbar = () => {
             <Search style={{ color: "gray", fontSize: 16 }} />
           </SearchContainer>
         </Left>
+        <Link to="/">
         <Center>
-          <Logo>LAMA.</Logo>
+          <Logo>COSHOPY.</Logo>
         </Center>
+        </Link>
         <Right>
           <MenuItem>REGISTER</MenuItem>
           <MenuItem>SIGN IN</MenuItem>
+          <Link to="/cart"> 
           <MenuItem>
-            <Badge badgeContent={4} color="primary">
+            <Badge badgeContent={quantity} color="primary">
               <ShoppingCartOutlined />
             </Badge>
           </MenuItem>
+          </Link>
         </Right>
       </Wrapper>
     </Container>

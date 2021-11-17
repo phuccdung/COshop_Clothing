@@ -9,7 +9,8 @@ import { useLocation } from "react-router";
 import {useState,useEffect} from "react";
 import {publicRequest } from "../requestMethods";
 import React from 'react';
-import axios from "axios";
+import { addProduct } from "../redux/cartRedux";
+import {useDispatch} from "react-redux";
 
 
 const Container = styled.div``;
@@ -125,12 +126,10 @@ const Product = () => {
   const location=useLocation();
   const id=location.pathname.split("/")[2];
   const [product,setProduct]=useState({});
-  const [colors,setColor]=useState("");
+  const [color,setColor]=useState("");
   const [size,setSize]=useState("");
   const [quantity,setQuantity]=useState(1);
-
-
-
+  const dispatch = useDispatch();
   
 
   useEffect(()=>{
@@ -151,9 +150,11 @@ const Product = () => {
     }
   }
 
-  // const handleClick ()=>{
-  //   axios.post;
-  // }
+  const handleClick = ()=>{
+    dispatch(
+    addProduct({...product,quantity,color,size})
+    );
+  }
 
   return (
     <Container>
@@ -191,7 +192,7 @@ const Product = () => {
               <Amount>{quantity}</Amount>
               <Add onClick={()=>handleQuantity("inc")}/>
             </AmountContainer>
-            <Button >ADD TO CART</Button>
+            <Button onClick={handleClick}>ADD TO CART</Button>
           </AddContainer>
         </InfoContainer>
       </Wrapper>
