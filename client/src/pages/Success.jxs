@@ -1,8 +1,0 @@
-const Success =()=>{
-    const location
-    return(
-        <div>
-        </div>
-    )
-}
-export default Success
