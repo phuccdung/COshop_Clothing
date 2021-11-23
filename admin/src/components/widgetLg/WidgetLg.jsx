@@ -1,6 +1,7 @@
 import "./widgetLg.css";
 import {useState,useEffect} from "react";
 import {userRequest} from "../../requestMethods";
+import {format} from "timeago.js"
 
 export default function WidgetLg() {
   const [Orders,setOrders]=useState([]);
@@ -28,19 +29,15 @@ export default function WidgetLg() {
           <th className="widgetLgTh">Status</th>
         </tr>
         {Orders.map(Order=>(
-                 <tr className="widgetLgTr">
+                 <tr className="widgetLgTr" key={Order._id}>
                  <td className="widgetLgUser">
-                   <img
-                     src="https://images.pexels.com/photos/4172933/pexels-photo-4172933.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-                     alt=""
-                     className="widgetLgImg"
-                   />
-                   <span className="widgetLgName">Susan Carol</span>
+                   
+                   <span className="widgetLgName">{Order.userId}</span>
                  </td>
-                 <td className="widgetLgDate">2 Jun 2021</td>
-                 <td className="widgetLgAmount">$122.00</td>
+                 <td className="widgetLgDate">{format(Order.createdAt)}</td>
+                 <td className="widgetLgAmount">${Order.amount}</td>
                  <td className="widgetLgStatus">
-                   <Button type="Approved" />
+                   <Button type={Order.status} />
                  </td>
                </tr>
         ))}
