@@ -6,10 +6,30 @@ import {
   PhoneAndroid,
   Publish,
 } from "@material-ui/icons";
-import { Link } from "react-router-dom";
+import { Link ,useLocation} from "react-router-dom";
 import "./user.css";
+import {useState,useMemo,useEffect} from "react";
+import {  userRequest  } from "../../requestMethods";
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import app from "../../firebase";
+import { updateProduct } from "../../redux/apiCalls";
+import { useDispatch } from "react-redux";
 
 export default function User() {
+  const location =useLocation();
+  const userId =location.pathname.split("/")[2];
+  const [user,setUser]=useState({});
+
+  useEffect(()=>{
+    const getProduct = async ()=>{
+      try{
+        const res =await userRequest.get("http://localhost:5000/api/users/find/"+userId);
+        setUser(res.data);
+      }catch(err){}
+    };
+    getProduct();
+  },[userId]);
+
   return (
     <div className="user">
       <div className="userTitleContainer">
@@ -22,7 +42,7 @@ export default function User() {
         <div className="userShow">
           <div className="userShowTop">
             <img
-              src="https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+              src={user.img || "https://crowd-literature.eu/wp-content/uploads/2015/01/no-avatar.gif"}
               alt=""
               className="userShowImg"
             />

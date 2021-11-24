@@ -2,7 +2,6 @@ import { Link,useLocation } from "react-router-dom";
 import "./product.css";
 import Chart from "../../components/chart/Chart"
 import { Publish } from "@material-ui/icons";
-import {useSelector} from "react-redux";
 import {useState,useMemo,useEffect} from "react";
 import {  userRequest  } from "../../requestMethods";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
