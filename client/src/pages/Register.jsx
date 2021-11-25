@@ -1,5 +1,8 @@
 import styled from "styled-components";
 import { mobile } from "../responsive";
+import {useState} from "react";
+import { addUser } from "../redux/apiCalls";
+import { useDispatch } from "react-redux";
 
 const Container = styled.div`
   width: 100vw;
@@ -55,22 +58,34 @@ const Button = styled.button`
 `;
 
 const Register = () => {
+  const [inputs,setInputs] =useState({});
+  const dispatch = useDispatch();
+  const handleChange =(e)=>{
+    setInputs(prev=>{
+      return {...prev, [e.target.name]:e.target.value}
+    })
+  };
+
+  const handleClick =(e)=>{
+    e.preventDefault();
+    addUser(inputs,dispatch);
+    
+  }
+  console.log(inputs);
   return (
     <Container>
       <Wrapper>
         <Title>CREATE AN ACCOUNT</Title>
         <Form>
-          <Input placeholder="name" />
-          <Input placeholder="last name" />
-          <Input placeholder="username" />
-          <Input placeholder="email" />
-          <Input placeholder="password" />
-          <Input placeholder="confirm password" />
+          {/* <Input  name="name" type="text" placeholder="name"  onChange={handleChange}/> */}
+          <Input  name="username" type="text" placeholder="username"  onChange={handleChange}/>
+          <Input   name="email" type="email" placeholder="email"  onChange={handleChange}/>
+          <Input  name="password" type="password" placeholder="password"  onChange={handleChange}/>
           <Agreement>
             By creating an account, I consent to the processing of my personal
             data in accordance with the <b>PRIVACY POLICY</b>
           </Agreement>
-          <Button>CREATE</Button>
+          <Button onClick={handleClick}>CREATE</Button>
         </Form>
       </Wrapper>
     </Container>
