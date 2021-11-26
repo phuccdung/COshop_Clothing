@@ -135,7 +135,7 @@ const Product = () => {
   useEffect(()=>{
     const getProduct = async ()=>{
       try{
-        const res =await publicRequest.get("http://localhost:5000/api/products/find/"+id);
+        const res =await publicRequest.get("https://apicoshopy.herokuapp.com/api/products/find/"+id);
         setProduct(res.data);
       }catch(err){}
     };
