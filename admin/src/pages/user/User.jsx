@@ -8,17 +8,19 @@ import {
 } from "@material-ui/icons";
 import { Link ,useLocation} from "react-router-dom";
 import "./user.css";
-import {useState,useMemo,useEffect} from "react";
+import {useState,useEffect} from "react";
 import {  userRequest  } from "../../requestMethods";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import app from "../../firebase";
-import { updateProduct } from "../../redux/apiCalls";
+import { updateUser } from "../../redux/apiCalls";
 import { useDispatch } from "react-redux";
 
 export default function User() {
   const location =useLocation();
   const userId =location.pathname.split("/")[2];
   const [user,setUser]=useState({});
+
+  const dispatch = useDispatch();
 
   useEffect(()=>{
     const getProduct = async ()=>{
@@ -29,14 +31,23 @@ export default function User() {
     };
     getProduct();
   },[userId]);
+  const [inputs,setInputs] =useState({});
+  const handleChange =(e)=>{
+    setInputs(prev=>{
+      return {...prev, [e.target.name]:e.target.value}
+    })
+  };
+
+  const handleClick =(e)=>{
+    e.preventDefault();
+    updateUser(userId,inputs,dispatch);
+  };
 
   return (
     <div className="user">
       <div className="userTitleContainer">
         <h1 className="userTitle">Edit User</h1>
-        <Link to="/newUser">
-          <button className="userAddButton">Create</button>
-        </Link>
+
       </div>
       <div className="userContainer">
         <div className="userShow">
@@ -47,7 +58,7 @@ export default function User() {
               className="userShowImg"
             />
             <div className="userShowTopTitle">
-              <span className="userShowUsername">Anna Becker</span>
+              <span className="userShowUsername">{user.username}</span>
               <span className="userShowUserTitle">Software Engineer</span>
             </div>
           </div>
@@ -55,7 +66,7 @@ export default function User() {
             <span className="userShowTitle">Account Details</span>
             <div className="userShowInfo">
               <PermIdentity className="userShowIcon" />
-              <span className="userShowInfoTitle">annabeck99</span>
+              <span className="userShowInfoTitle">{user.username}</span>
             </div>
             <div className="userShowInfo">
               <CalendarToday className="userShowIcon" />
@@ -68,11 +79,11 @@ export default function User() {
             </div>
             <div className="userShowInfo">
               <MailOutline className="userShowIcon" />
-              <span className="userShowInfoTitle">annabeck99@gmail.com</span>
+              <span className="userShowInfoTitle">{user.email}</span>
             </div>
             <div className="userShowInfo">
               <LocationSearching className="userShowIcon" />
-              <span className="userShowInfoTitle">New York | USA</span>
+              <span className="userShowInfoTitle">{user.address}</span>
             </div>
           </div>
         </div>
@@ -84,8 +95,9 @@ export default function User() {
                 <label>Username</label>
                 <input
                   type="text"
-                  placeholder="annabeck99"
+                  placeholder={user.username}
                   className="userUpdateInput"
+                  onChange={handleChange}
                 />
               </div>
               <div className="userUpdateItem">
@@ -100,8 +112,10 @@ export default function User() {
                 <label>Email</label>
                 <input
                   type="text"
-                  placeholder="annabeck99@gmail.com"
+                  name="email"
+                  defaultValue={user.email}
                   className="userUpdateInput"
+                  onChange={handleChange}
                 />
               </div>
               <div className="userUpdateItem">
@@ -116,8 +130,10 @@ export default function User() {
                 <label>Address</label>
                 <input
                   type="text"
-                  placeholder="New York | USA"
+                  name="address"
+                  defaultValue={user.address}
                   className="userUpdateInput"
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -133,7 +149,7 @@ export default function User() {
                 </label>
                 <input type="file" id="file" style={{ display: "none" }} />
               </div>
-              <button className="userUpdateButton">Update</button>
+              <button onClick={handleClick} className="userUpdateButton">Update</button>
             </div>
           </form>
         </div>

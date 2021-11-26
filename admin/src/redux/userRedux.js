@@ -53,35 +53,20 @@ const userSlice = createSlice({
       state.error = true;
     },
     //UPDATE
-    updateProductStart: (state) => {
+    updateUserStart: (state) => {
       state.isFetching = true;
       state.error = false;
     },
-    updateProductSuccess: (state, action) => {
+    updateUserSuccess: (state, action) => {
       state.isFetching = false;
-      state.products[
-        state.products.findIndex((item) => item._id === action.payload.id)
-      ] = action.payload.product;
+      state.users[
+        state.users.findIndex((item) => item._id === action.payload.id)
+      ] = action.payload.user;
     },
-    updateProductFailure: (state) => {
-      state.isFetching = false;
-      state.error = true;
-    },
-    //add
-    addProductStart: (state) => {
-      state.isFetching = true;
-      state.error = false;
-    },
-    addProductSuccess: (state, action) => {
-      state.isFetching = false;
-      state.products.push(action.payload);
-    },
-    addProductFailure: (state) => {
+    updateUserFailure: (state) => {
       state.isFetching = false;
       state.error = true;
-    },
-
-
+    }
   },
 });
 
@@ -93,5 +78,9 @@ export const { loginStart, loginSuccess,
   deleteUserStart,
 deleteUserSuccess,
 deleteUserFailure,
+updateUserStart,
+updateUserSuccess,
+updateUserFailure
+
 } = userSlice.actions;
 export default userSlice.reducer;
