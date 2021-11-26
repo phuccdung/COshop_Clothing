@@ -80,6 +80,7 @@ const Register = () => {
           {/* <Input  name="name" type="text" placeholder="name"  onChange={handleChange}/> */}
           <Input  name="username" type="text" placeholder="username"  onChange={handleChange}/>
           <Input   name="email" type="email" placeholder="email"  onChange={handleChange}/>
+          <Input  name="address" type="text" placeholder="address"  onChange={handleChange}/>
           <Input  name="password" type="password" placeholder="password"  onChange={handleChange}/>
           <Agreement>
             By creating an account, I consent to the processing of my personal
